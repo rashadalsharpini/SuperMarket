@@ -11,4 +11,8 @@
       <Folder Include="Repisotories\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\DataLayer\DataLayer.csproj" />
+    </ItemGroup>
+
 </Project>
