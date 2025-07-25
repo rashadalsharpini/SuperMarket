@@ -26,4 +26,9 @@
       </Reference>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Repos\Interfaces\" />
+      <Folder Include="Repos\Repositories\" />
+    </ItemGroup>
+
 </Project>
