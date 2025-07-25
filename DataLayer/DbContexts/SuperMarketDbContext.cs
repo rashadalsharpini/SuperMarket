@@ -23,4 +23,5 @@ public class SuperMarketDbContext:DbContext
     public DbSet<Customer> Customers { get; set; } = null!;
     public DbSet<Employee> Employees { get; set; } = null!;
     public DbSet<Order> Orders { get; set; } = null!;
+    public DbSet<Expenses>  Expenses { get; set; } = null!;
 }
