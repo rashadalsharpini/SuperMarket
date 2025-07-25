@@ -1,3 +1,5 @@
+using DataLayer.Repos.Interfaces;
+using DataLayer.Repos.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +14,7 @@ public static class DbContextRegistration
         {
             opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
         });
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         return services;
     }
 }
