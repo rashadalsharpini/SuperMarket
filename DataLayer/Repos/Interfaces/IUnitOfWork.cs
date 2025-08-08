@@ -1,5 +1,4 @@
 using DataLayer.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace DataLayer.Repos.Interfaces;
 

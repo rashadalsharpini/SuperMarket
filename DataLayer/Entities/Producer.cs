@@ -1,5 +1,3 @@
-using System.Runtime.InteropServices;
-
 namespace DataLayer.Entities;
 
 public class Producer:BaseEntity<int>

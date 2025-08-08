@@ -1,6 +1,5 @@
 using DataLayer.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace DataLayer.DbContexts;
 
