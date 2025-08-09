@@ -10,5 +10,5 @@ public interface IExpensesService
     Task<Expenses?> CreateAsync(decimal amount, DateOnly date, string description, KindOfExpenses koe);
     Task<Expenses> UpdateAsync(int id, decimal amount, DateOnly date, string description, KindOfExpenses koe);
     Task<Expenses> RemoveAsync(int id);
-    Task<Expenses> SearchAsync(int id);
+    Task<IEnumerable<Expenses>> GetAllExpensesFromToKind(DateOnly from, DateOnly to,  KindOfExpenses koe);
 }

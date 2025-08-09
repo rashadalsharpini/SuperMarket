@@ -1,6 +1,7 @@
 using DataLayer.Entities;
 using DataLayer.Enums;
 using DataLayer.Repos.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using ServiceLayer.interfaces;
 
 namespace ServiceLayer.services;
@@ -30,7 +31,8 @@ public class ExpensesService(IUnitOfWork uow) : IExpensesService
         return entity;
     }
 
-    public async Task<Expenses> UpdateAsync(int id, decimal amount, DateOnly date, string description, KindOfExpenses koe)
+    public async Task<Expenses> UpdateAsync(int id, decimal amount, DateOnly date, string description,
+        KindOfExpenses koe)
     {
         var entity = await repo.GetByIdAsync(id) ?? throw new NullReferenceException();
 
@@ -50,8 +52,8 @@ public class ExpensesService(IUnitOfWork uow) : IExpensesService
         return entity;
     }
 
-    public async Task<Expenses> SearchAsync(int id)
+    public async Task<IEnumerable<Expenses>> GetAllExpensesFromToKind(DateOnly from, DateOnly to, KindOfExpenses koe)
     {
-        return await GetExpensesById(id);
+        return await repo.Query().Where(e => e.Date >= from && e.Date <= to && e.Koe == koe).ToListAsync();
     }
 }

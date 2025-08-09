@@ -5,30 +5,41 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.Repos.Repositories;
 
-public class GenericRepo<TEntity, TKey>(SuperMarketDbContext db):IGenericRepo<TEntity, TKey>where TEntity:BaseEntity<TKey>
+public class GenericRepo<TEntity, TKey>:IGenericRepo<TEntity, TKey>where TEntity:BaseEntity<TKey>
 {
+    private readonly DbSet<TEntity> dbSet;
+
+    public GenericRepo(SuperMarketDbContext db)
+    {
+        dbSet = db.Set<TEntity>();
+    }
+    public IQueryable<TEntity> Query()
+    {
+        return dbSet.AsQueryable();
+    }
+
     public async Task<IEnumerable<TEntity>> GetAllAsync()
     {
-        return await db.Set<TEntity>().ToListAsync();
+        return await dbSet.ToListAsync();
     }
 
     public async Task<TEntity?> GetByIdAsync(TKey id)
     {
-        return await db.Set<TEntity>().FindAsync(id);
+        return await dbSet.FindAsync(id);
     }
 
     public async Task AddAsync(TEntity entity)
     {
-        await db.Set<TEntity>().AddAsync(entity);
+        await dbSet.AddAsync(entity);
     }
 
     public void Update(TEntity entity)
     {
-        db.Set<TEntity>().Update(entity);
+        dbSet.Update(entity);
     }
 
     public void Remove(TEntity entity)
     {
-        db.Set<TEntity>().Remove(entity);
+        dbSet.Remove(entity);
     }
 }
