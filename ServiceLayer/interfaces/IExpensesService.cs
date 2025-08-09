@@ -6,9 +6,9 @@ namespace ServiceLayer.interfaces;
 public interface IExpensesService
 {
     Task<Expenses> GetExpensesById(int id);
-    Task<IEnumerable<Expenses>> GetAllExpenses();
+    public Task<(decimal sum, IEnumerable<Expenses>)> GetAllExpenses();
     Task<Expenses?> CreateAsync(decimal amount, DateOnly date, string description, KindOfExpenses koe);
     Task<Expenses> UpdateAsync(int id, decimal amount, DateOnly date, string description, KindOfExpenses koe);
     Task<Expenses> RemoveAsync(int id);
-    Task<IEnumerable<Expenses>> GetAllExpensesFromToKind(DateOnly from, DateOnly to,  KindOfExpenses koe);
+    Task<IEnumerable<Expenses>> GetAllExpensesFromToKind(DateOnly from, DateOnly to, KindOfExpenses koe);
 }

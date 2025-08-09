@@ -15,19 +15,18 @@ public class ExpensesService(IUnitOfWork uow) : IExpensesService
         return await repo.GetByIdAsync(id) ?? throw new NullReferenceException();
     }
 
-    public async Task<IEnumerable<Expenses>> GetAllExpenses()
+    public async Task<(decimal sum, IEnumerable<Expenses>)> GetAllExpenses()
     {
-        return await repo.GetAllAsync() ?? throw new NullReferenceException();
+        var expenses = await repo.GetAllAsync() ?? throw new NullReferenceException();
+        var sum = await repo.Query().SumAsync(e => e.Amount);
+        return (sum, expenses);
     }
 
     public async Task<Expenses?> CreateAsync(decimal amount, DateOnly date, string description, KindOfExpenses koe)
     {
         var entity = new Expenses(amount, date, description, koe);
         await repo.AddAsync(entity);
-
-        var isCreated = await repo.GetByIdAsync(entity.Id);
-        if (isCreated is null)
-            throw new NullReferenceException();
+        await uow.SaveChangesAsync();
         return entity;
     }
 
@@ -42,6 +41,7 @@ public class ExpensesService(IUnitOfWork uow) : IExpensesService
         entity.Koe = koe;
 
         repo.Update(entity);
+        await uow.SaveChangesAsync();
         return entity;
     }
 
@@ -49,6 +49,7 @@ public class ExpensesService(IUnitOfWork uow) : IExpensesService
     {
         var entity = await repo.GetByIdAsync(id) ?? throw new NullReferenceException();
         repo.Remove(entity);
+        await uow.SaveChangesAsync();
         return entity;
     }
 
